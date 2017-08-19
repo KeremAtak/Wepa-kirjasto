@@ -1,0 +1,39 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.springframework.org/security/tags">
+    <head>
+        <title>Genre</title>
+        <meta charset="UTF-8" />
+    </head>
+    <body>
+        
+        <h2 th:text="${genre.name} + 'kirjat'">genrename</h2>
+        
+        <ul>
+            <li th:each="book : ${books}">
+                <a th:href="@{/genres/{genreId}/{bookId}(genreId=${genre.id},bookId=${book.id})}" th:text="${book.name}">author name</a>
+            </li>
+        </ul>
+        
+        <div>
+            <h3>Lisää kirja</h3>
+            <form action="/genres/{genreId}" method="POST">
+                <input type="text" name="name" placeholder="nimi"/>
+                <input type="text" name="pages" placeholder="sivut"/>
+                <input type="text" name="year" placeholder="vuosi"/><br/>
+                <input type="text" name="description" placeholder="kuvaus" style="width: 529px; height: 60px"/><br/>
+                <select name="genreId">
+                    <option th:each="genre : ${genres}" th:value="${genre.id}" th:text="${genre.name}">genre</option>
+                </select> 
+                <select name="authorId">
+                    <option th:each="author : ${authors}" th:value="${author.id}" th:text="${author.name}">author</option>
+                </select> 
+                <input type="submit"/>
+            </form>
+        </div>
+
+        <p>
+            <a th:href="@{/genres}">Genret</a>
+        </p>
+    </body>
+</html>
+

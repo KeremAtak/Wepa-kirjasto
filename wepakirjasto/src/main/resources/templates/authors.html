@@ -1,0 +1,29 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Genres</title>
+        <meta charset="UTF-8" />
+    </head>
+    <body>
+        
+        <h2>Kirjailijat</h2>
+        
+        <ul>
+            <li th:each="author : ${authors}">
+                <a th:href="@{/authors/{authorId}(authorId=${author.id})}" th:text="${author.name + ' ' + author.surname}">author name</a>
+            </li>
+        </ul>
+        
+        <div>
+            <h3>Lisää kirjailija</h3>
+            <form action="/authors" method="POST">
+                <input type="text" name="name" placeholder="etunimi"/>
+                <input type="text" name="surname" placeholder="sukunimi"/>
+                <input type="submit"/>
+            </form>
+        </div>
+        <p>
+            <a th:href="@{/}">Valikkoon</a>
+        </p>
+    </body>
+</html>
