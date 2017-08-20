@@ -24,7 +24,7 @@ public class GenreController {
     private BookRepository bookRepository;
     
     @Autowired
-    private PersonRepository userRepository;
+    private PersonRepository personRepository;
     
     @Autowired
     private GenreRepository genreRepository;
