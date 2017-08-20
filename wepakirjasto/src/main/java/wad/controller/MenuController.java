@@ -10,20 +10,22 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import wad.domain.User;
-import wad.repository.UserRepository;
+import wad.domain.Person;
+import wad.repository.PersonRepository;
 
 @Controller
 @RequestMapping("/")
 public class MenuController {
     
     @Autowired
-    private UserRepository userRepository;
+    private PersonRepository personRepository;
     
     @RequestMapping(method = RequestMethod.GET)
     public String viewMenu(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        model.addAttribute("user", userRepository.findByUsername(authentication.getName()));
+        if (authentication != null) {
+            model.addAttribute("person", personRepository.findByUsername(authentication.getName()));
+        }
         return "index";
     }
 }

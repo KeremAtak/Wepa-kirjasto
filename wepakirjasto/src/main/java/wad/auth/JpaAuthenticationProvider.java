@@ -12,36 +12,36 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Component;
-import wad.domain.User;
-import wad.repository.UserRepository;
+import wad.domain.Person;
+import wad.repository.PersonRepository;
 
 @Component
 public class JpaAuthenticationProvider implements AuthenticationProvider {
 
     @Autowired
-    private UserRepository userRepository;
+    private PersonRepository personRepository;
 
     @Override
     public Authentication authenticate(Authentication a) throws AuthenticationException {
         String username = a.getPrincipal().toString();
         String password = a.getCredentials().toString();
 
-        User user = userRepository.findByUsername(username);
+        Person person = personRepository.findByUsername(username);
 
-        if (user == null) {
+        if (person == null) {
             throw new AuthenticationException("Unable to authenticate user " + username) {
             };
         }
 
-        if (!BCrypt.hashpw(password, user.getSalt()).equals(user.getPassword())) {
+        if (!BCrypt.hashpw(password, person.getSalt()).equals(person.getPassword())) {
             throw new AuthenticationException("Unable to authenticate user " + username) {
             };
         }
 
         List<GrantedAuthority> grantedAuths = new ArrayList<>();
         grantedAuths.add(new SimpleGrantedAuthority("ROLE_USER"));
-
-        return new UsernamePasswordAuthenticationToken(user.getUsername(), password, grantedAuths);
+        
+        return new UsernamePasswordAuthenticationToken(person.getUsername(), password, grantedAuths);
     }
 
     @Override

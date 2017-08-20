@@ -8,7 +8,7 @@
         
         <h1>Valikko</h1>
         
-        <strong th:text="'Tervetuloa kirjastopalveluun ' + ${user.username}">username</strong>
+        <strong th:text="'Tervetuloa kirjastopalveluun ' + ${person.username}">username</strong>
         
         <p>
             <a th:href="@{/genres}">Kirjat</a>
@@ -19,7 +19,7 @@
         </p>
         
         <p>
-            <a th:href="@{/reservations/{userId}(userId=${user.id})}" th:text="Varaukset">user</a>
+            <a th:href="@{/reservations/{personId}(personId=${person.id})}" th:text="Varaukset">person</a>
         </p>
         
        

@@ -16,7 +16,7 @@ import wad.repository.AuthorRepository;
 import wad.repository.BookRepository;
 import wad.repository.GenreRepository;
 import wad.repository.ReservationRepository;
-import wad.repository.UserRepository;
+import wad.repository.PersonRepository;
 
 @Controller
 @RequestMapping("/genres/{genreId}")
@@ -26,7 +26,7 @@ public class BookController {
     private BookRepository bookRepository;
     
     @Autowired
-    private UserRepository userRepository;
+    private PersonRepository personRepository;
     
     @Autowired
     private GenreRepository genreRepository;
@@ -81,14 +81,14 @@ public class BookController {
         
         if (book.getReservation() == null) {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            User user = userRepository.findByUsername(authentication.getName());
+            Person person = personRepository.findByUsername(authentication.getName());
 
-            Reservation reservation = new Reservation(user, bookRepository.findById(bookId));
+            Reservation reservation = new Reservation(person, bookRepository.findById(bookId));
             book.setReservation(reservation);
-            user.setReservation(reservation);
+            person.setReservation(reservation);
 
             reservationRepository.save(reservation);
-            userRepository.save(user);
+            personRepository.save(person);
         }
         return "redirect:/genres/{genreId}/{bookId}";
     }

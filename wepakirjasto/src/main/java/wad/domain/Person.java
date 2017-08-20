@@ -12,7 +12,7 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 
 @Entity
-public class User extends AbstractPersistable<Long> {
+public class Person extends AbstractPersistable<Long> {
     
     @NotBlank
     @Length(min = 4, max = 20)
@@ -27,7 +27,7 @@ public class User extends AbstractPersistable<Long> {
     @OneToOne
     private Reservation reservation;
     
-    public User() {
+    public Person() {
         this.reservation = null;
     }
 

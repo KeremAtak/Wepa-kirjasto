@@ -14,16 +14,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import wad.domain.Book;
 import wad.domain.Reservation;
-import wad.domain.User;
+import wad.domain.Person;
 import wad.repository.ReservationRepository;
-import wad.repository.UserRepository;
+import wad.repository.PersonRepository;
 
 @Controller
 @RequestMapping("/reservations")
 public class ReservationController {
     
     @Autowired
-    private UserRepository userRepository;
+    private PersonRepository personRepository;
     
     @Autowired
     private ReservationRepository reservationRepository;
@@ -32,22 +32,22 @@ public class ReservationController {
     public String returnMenu(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         model.addAttribute("teksti", "Tervetuloa valikkoon, ");
-        model.addAttribute("currentUser", userRepository.findByUsername(authentication.getName()));
+        model.addAttribute("currentUser", personRepository.findByUsername(authentication.getName()));
         return "index";
     }
     
     @RequestMapping(value = "{userId}", method = RequestMethod.GET)
-    public String viewReservation(@PathVariable("userId") Long userId, Model model) {
-        User user = userRepository.findById(userId);
+    public String viewReservation(@PathVariable("personId") Long personId, Model model) {
+        Person person = personRepository.findById(personId);
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        model.addAttribute("user", user);
+        model.addAttribute("user", person);
 
-        if (user.getUsername().equals(authentication.getName())) {
-            List<Reservation> reservations = reservationRepository.findByUser(user);
+        if (person.getUsername().equals(authentication.getName())) {
+            List<Reservation> reservations = reservationRepository.findByPerson(person);
             model.addAttribute("reservations", reservations);
             return "reservations";
         }
-        model.addAttribute("user", userRepository.findByUsername(authentication.getName()));
+        model.addAttribute("user", personRepository.findByUsername(authentication.getName()));
         return "index";
     }
     
@@ -59,9 +59,9 @@ public class ReservationController {
         reservationRepository.delete(reservationId);
         
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        User user = userRepository.findByUsername(authentication.getName());
-        model.addAttribute("user", user);
-        String id = user.getId().toString();
+        Person person = personRepository.findByUsername(authentication.getName());
+        model.addAttribute("user", person);
+        String id = person.getId().toString();
         return "redirect:/reservations/" + id;
     }
 }

@@ -9,12 +9,12 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 public class Reservation extends AbstractPersistable<Long> {
     
     @OneToOne
-    private User user;
+    private Person person;
     @OneToOne
     private Book book;
     
-    public Reservation(User user, Book book) {
-        this.user = user;
+    public Reservation(Person person, Book book) {
+        this.person = person;
         this.book = book;
     }
     
@@ -22,12 +22,12 @@ public class Reservation extends AbstractPersistable<Long> {
         
     }
     
-    public User getUser() {
-        return user;
+    public Person getUser() {
+        return person;
     }
     
-    public void setUser(User user) {
-        this.user = user;
+    public void setUser(Person person) {
+        this.person = person;
     }
     
     public Book getBook() {

@@ -1,6 +1,7 @@
 package wad.controller;
 
 import javax.annotation.PostConstruct;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.stereotype.Controller;
@@ -11,11 +12,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import wad.domain.Author;
 import wad.domain.Book;
 import wad.domain.Genre;
-import wad.domain.User;
+import wad.domain.Person;
 import wad.repository.AuthorRepository;
 import wad.repository.BookRepository;
 import wad.repository.GenreRepository;
-import wad.repository.UserRepository;
+import wad.repository.PersonRepository;
 
 @Controller
 @EnableGlobalMethodSecurity(securedEnabled = true)
@@ -23,7 +24,7 @@ import wad.repository.UserRepository;
 public class DefaultController {
     
     @Autowired
-    private UserRepository userRepository;
+    private PersonRepository personRepository;
     
     @Autowired
     private BookRepository bookRepository;
@@ -36,17 +37,6 @@ public class DefaultController {
     
     @PostConstruct
     public void init() {
-        
-        User u1 = new User();
-        u1.setUsername("user");
-        u1.setPassword("password");
-        User u2 = new User();
-        u2.setUsername("admin");
-        u2.setPassword("password");
-        
-        userRepository.save(u1);
-        userRepository.save(u2);
-        
         Author a1 = new Author("Erwin", "Rommel");
         Author a2 = new Author("Kyösti", "Kallio");
         
@@ -86,11 +76,6 @@ public class DefaultController {
         authorRepository.save(a2);
     }
     
-    @RequestMapping(method = RequestMethod.GET)
-    public String goToLogin(Model model) {
-        return "login";
-    }
-    
     @RequestMapping(value = "login", method = RequestMethod.GET)
     public String viewLogin(Model model) {
         return "login";
@@ -102,8 +87,8 @@ public class DefaultController {
     }
     
     @RequestMapping(value = "register", method = RequestMethod.POST) 
-    public String registerUser(@ModelAttribute User user, Model model) {
-        userRepository.save(user);
-        return "redirect:/login";
+    public String registerUser(@Valid @ModelAttribute Person person, Model model) {
+        personRepository.save(person);
+        return "login";
     }
 }

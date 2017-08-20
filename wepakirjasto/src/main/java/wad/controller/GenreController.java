@@ -14,7 +14,7 @@ import wad.domain.*;
 import wad.repository.BookRepository;
 import wad.repository.GenreRepository;
 import wad.repository.ReservationRepository;
-import wad.repository.UserRepository;
+import wad.repository.PersonRepository;
 
 @Controller
 @RequestMapping("/genres")
@@ -24,7 +24,7 @@ public class GenreController {
     private BookRepository bookRepository;
     
     @Autowired
-    private UserRepository userRepository;
+    private PersonRepository userRepository;
     
     @Autowired
     private GenreRepository genreRepository;
