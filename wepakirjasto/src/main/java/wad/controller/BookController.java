@@ -3,6 +3,7 @@ package wad.controller;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -17,9 +18,11 @@ import wad.repository.BookRepository;
 import wad.repository.GenreRepository;
 import wad.repository.ReservationRepository;
 import wad.repository.PersonRepository;
+import wad.service.BookService;
 
 @Controller
 @RequestMapping("/genres/{genreId}")
+@EnableGlobalMethodSecurity(securedEnabled = true)
 public class BookController {
     
     @Autowired
@@ -37,6 +40,9 @@ public class BookController {
     @Autowired
     private AuthorRepository authorRepository;
     
+    @Autowired
+    private BookService bookService;
+    
     @RequestMapping(method = RequestMethod.GET)
     public String viewBooks(@PathVariable("genreId") Long genreId, Model model) {
         Genre genre = genreRepository.findById(genreId);
@@ -51,6 +57,7 @@ public class BookController {
         return "genre";
     }
     
+    @Secured("ROLE_ADMIN")
     @RequestMapping(method = RequestMethod.POST)
     public String addBook(@RequestParam String name, @RequestParam int pages, @RequestParam int year, 
             @RequestParam String description, @RequestParam Long genreId, @RequestParam Long authorId) {
@@ -61,7 +68,6 @@ public class BookController {
         return "redirect:/genres/" + b.getGenre().getId() + "/" + b.getId();
     }
     
-    //Urlissa voi vaihtaa genreä jne
     @RequestMapping(value = "{bookId}", method = RequestMethod.GET)
     public String singleBook(@PathVariable("genreId") Long genreId, @PathVariable("bookId") Long bookId, Model model) {
         Book book = bookRepository.findById(bookId);
@@ -77,20 +83,15 @@ public class BookController {
     
     @RequestMapping(value = "{bookId}", method = RequestMethod.POST)
     public String addReservation(@PathVariable("bookId") Long bookId, Model model) {
-        Book book = bookRepository.findById(bookId);
-        
-        if (book.getReservation() == null) {
-            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            Person person = personRepository.findByUsername(authentication.getName());
-
-            Reservation reservation = new Reservation(person, bookRepository.findById(bookId));
-            book.setReservation(reservation);
-            person.setReservation(reservation);
-
-            reservationRepository.save(reservation);
-            personRepository.save(person);
-        }
+        bookService.addReservation(bookId);
         return "redirect:/genres/{genreId}/{bookId}";
+    }
+    
+    @Secured("ROLE_ADMIN")
+    @RequestMapping(value = "{bookId}", method = RequestMethod.DELETE)
+    public String deleteBook(@PathVariable("bookId") Long bookId, Model model) {
+        bookService.deleteBook(bookId);
+        return "redirect:/genres/{genreId}";
     }
     
 }

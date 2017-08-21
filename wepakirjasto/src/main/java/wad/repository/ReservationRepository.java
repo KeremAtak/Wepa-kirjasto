@@ -7,6 +7,7 @@ import wad.domain.Person;
 
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {
     Reservation findById(Long id);
+    Reservation findByBook(Long id);
     List<Reservation> findByPerson(Person user);
 }
 

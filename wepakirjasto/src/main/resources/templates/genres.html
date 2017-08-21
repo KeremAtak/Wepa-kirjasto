@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.springframework.org/security/tags">
     <head>
         <title>Genres</title>
         <meta charset="UTF-8" />
@@ -11,10 +11,13 @@
         <ul>
             <li th:each="genre : ${genres}">
                 <a th:href="@{/genres/{genreId}(genreId=${genre.id})}" th:text="${genre.name}">Gendre name</a>
+                <form th:action="@{/genres/{genreId}(genreId=${genre.id})}" th:method="DELETE" sec:authorize="hasRole('ROLE_ADMIN')">
+                    <input type="submit" value="Poista"/>
+                </form>
             </li>
         </ul>
         
-        <div>
+        <div sec:authorize="hasRole('ROLE_ADMIN')">
             <h3>Lisää genre</h3>
             <form action="/genres" method="POST">
                 <input type="text" name="name" placeholder="nimi"/>

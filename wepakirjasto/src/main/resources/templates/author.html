@@ -14,6 +14,10 @@
             </li>
         </ul>
         
+        <form th:action="@{/authors/{authorId}(authorId=${author.id})}" th:method="DELETE" sec:authorize="hasRole('ROLE_ADMIN')">
+            <input type="submit" value="Poista kirjailija"/>
+        </form>
+        
         <p>
             <a th:href="@{/authors}">Kirjailijat</a>
         </p>

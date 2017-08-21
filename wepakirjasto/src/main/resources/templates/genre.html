@@ -14,7 +14,7 @@
             </li>
         </ul>
         
-        <div>
+        <div sec:authorize="hasRole('ROLE_ADMIN')">
             <h3>Lisää kirja</h3>
             <form action="/genres/{genreId}" method="POST">
                 <input type="text" name="name" placeholder="nimi"/>
@@ -27,7 +27,7 @@
                 <select name="authorId">
                     <option th:each="author : ${authors}" th:value="${author.id}" th:text="${author.name}">author</option>
                 </select> 
-                <input type="submit"/>
+                <input type="submit" value="Lisää"/>
             </form>
         </div>
 

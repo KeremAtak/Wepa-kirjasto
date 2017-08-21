@@ -10,10 +10,10 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import wad.auth.JpaAuthenticationProvider;
 
-@Profile("default")
+@Profile("profile")
 @Configuration
 @EnableWebSecurity
-public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+public class ProductionSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -41,7 +41,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
     
     
-    @Profile("default")
+    @Profile("production")
     @Configuration
     protected static class AuthenticationConfiguration extends GlobalAuthenticationConfigurerAdapter {
         
@@ -52,9 +52,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         public void init(AuthenticationManagerBuilder auth) throws Exception {
             auth.authenticationProvider(jpaAuthenticationProvider)
                 .inMemoryAuthentication()
-                .withUser("admin").password("password").roles("ADMIN")
-                .and().withUser("user").password("password").roles("USER");
-
+                .withUser("admin").password("password").roles("ADMIN");
         }
     }
 }

@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.springframework.org/security/tags">
     <head>
         <title>Menu</title>
         <meta charset="UTF-8" />
@@ -8,8 +8,8 @@
         
         <h1>Valikko</h1>
         
-        <strong th:text="'Tervetuloa kirjastopalveluun ' + ${person.username}">username</strong>
-        
+        <strong sec:authorize="hasRole('ROLE_USER')" th:text="'Tervetuloa kirjastopalveluun ' + ${person.username}">username</strong>
+
         <p>
             <a th:href="@{/genres}">Kirjat</a>
         </p>
@@ -18,7 +18,7 @@
             <a th:href="@{/authors}">Kirjailijat</a>
         </p>
         
-        <p>
+        <p sec:authorize="hasRole('ROLE_USER')">
             <a th:href="@{/reservations/{personId}(personId=${person.id})}" th:text="Varaukset">person</a>
         </p>
         

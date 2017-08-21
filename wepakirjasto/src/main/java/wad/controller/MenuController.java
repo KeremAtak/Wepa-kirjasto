@@ -23,9 +23,8 @@ public class MenuController {
     @RequestMapping(method = RequestMethod.GET)
     public String viewMenu(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null) {
-            model.addAttribute("person", personRepository.findByUsername(authentication.getName()));
-        }
+        model.addAttribute("person", personRepository.findByUsername(authentication.getName()));
+        
         return "index";
     }
 }

@@ -93,6 +93,12 @@
                     <fork>true</fork>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>com.heroku.sdk</groupId>
+                <artifactId>heroku-maven-plugin</artifactId>
+                <version>1.2.0</version>
+            </plugin>
+
         </plugins>
     </build>
 </project>

@@ -2,6 +2,7 @@ package wad.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import org.springframework.data.jpa.domain.AbstractPersistable;
@@ -9,6 +10,7 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 @Entity
 public class Genre extends AbstractPersistable<Long> {
     
+    @Column(unique = true)
     private String name;
    
     @OneToMany
@@ -41,5 +43,9 @@ public class Genre extends AbstractPersistable<Long> {
     
     public void addBook(Book book) {
         this.books.add(book);
+    }
+    
+    public void removeBook(Book book) {
+        this.books.remove(book);
     }
 }

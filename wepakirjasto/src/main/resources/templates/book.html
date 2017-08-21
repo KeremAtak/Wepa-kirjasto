@@ -27,14 +27,19 @@
         <h3>Kirjailija</h3>
         
         <a th:href="@{/authors/{authorId}(authorId=${book.author.id})}" th:text="${author.name + ' ' + author.surname}">author name</a>
-        
-        <form th:action="@{/genres/{genreId}/{bookId}(genreId=${book.genre.id},bookId=${book.id})}" method="POST">
-            <input type="submit" value="Varaa"/>            
-        </form>
+        <div sec:authorize="hasRole('ROLE_USER')">
+            <form th:action="@{/genres/{genreId}/{bookId}(genreId=${book.genre.id},bookId=${book.id})}" method="POST">
+                <input type="submit" value="Varaa"/>            
+            </form>
+        </div>
         
         <p>
             <a th:href="@{/genres/{genreId}(genreId=${book.genre.id})}">Kirjat</a>
         </p>
+        
+        <form th:action="@{/genres/{genreId}/{bookId}(genreId=${genre.id},bookId=${book.id})}" th:method="DELETE" sec:authorize="hasRole('ROLE_ADMIN')">
+            <input type="submit" value="Poista kirja"/>
+        </form>
     </body>
 </html>
 
