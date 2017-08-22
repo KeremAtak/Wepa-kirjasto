@@ -24,6 +24,9 @@ public class BookService {
     @Autowired
     private ReservationRepository reservationRepository;
     
+    @Autowired
+    private ReservationService reservationService;
+    
     @Transactional
     public void addReservation(Long bookId) {
         Book book = bookRepository.findById(bookId);
@@ -47,7 +50,7 @@ public class BookService {
         b.setAuthor(null);
         b.setGenre(null);
         if (b.getReservation() != null) {
-            reservationRepository.delete(reservationRepository.findByBook(bookId));
+            reservationService.deleteReservation(b.getReservation().getId());
         }
         
         bookRepository.delete(bookId);
