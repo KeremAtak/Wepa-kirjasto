@@ -29,7 +29,10 @@ public class ProductionSecurityConfiguration extends WebSecurityConfigurerAdapte
                 .defaultSuccessUrl("/")
                 .usernameParameter("username")
                 .passwordParameter("password")
-                .permitAll();
+                .permitAll()
+                 .and().
+                httpBasic().disable();
+
 
         http.logout()
                 .logoutUrl("/logout")
