@@ -15,15 +15,12 @@
         </ul>
         
         <div sec:authorize="hasRole('ROLE_ADMIN')">
-            <h3>Lisää kirja</h3>
-            <form action="/genres/{genreId}" method="POST">
+            <h3 th:text="'Lisää ' + ${genre.name} + 'kirja'">genrename</h3>
+            <form th:action="@{/genres/{genreId}(genreId=${genre.id})}" method="POST">
                 <input type="text" name="name" placeholder="nimi"/>
                 <input type="text" name="pages" placeholder="sivut"/>
                 <input type="text" name="year" placeholder="vuosi"/><br/>
                 <input type="text" name="description" placeholder="kuvaus" style="width: 529px; height: 60px"/><br/>
-                <select name="genreId">
-                    <option th:each="genre : ${genres}" th:value="${genre.id}" th:text="${genre.name}">genre</option>
-                </select> 
                 <select name="authorId">
                     <option th:each="author : ${authors}" th:value="${author.id}" th:text="${author.name}">author</option>
                 </select> 

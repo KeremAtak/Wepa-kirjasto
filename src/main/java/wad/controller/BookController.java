@@ -22,7 +22,6 @@ import wad.service.BookService;
 
 @Controller
 @RequestMapping("/genres/{genreId}")
-@EnableGlobalMethodSecurity(securedEnabled = true)
 public class BookController {
     
     @Autowired
@@ -59,8 +58,8 @@ public class BookController {
     
     @Secured("ROLE_ADMIN")
     @RequestMapping(method = RequestMethod.POST)
-    public String addBook(@RequestParam String name, @RequestParam int pages, @RequestParam int year, 
-            @RequestParam String description, @RequestParam Long genreId, @RequestParam Long authorId) {
+    public String addBook(@PathVariable("genreId") Long genreId, @RequestParam String name, @RequestParam int pages, @RequestParam int year, 
+            @RequestParam String description, @RequestParam Long authorId) {
         Genre genre = genreRepository.findById(genreId);
         Author author = authorRepository.findById(authorId);
         

@@ -21,8 +21,6 @@ public class GenreService {
     @Autowired
     private BookService bookService;
     
-    
-    
     @Transactional
     public void deleteGenre(Long genreId) {
         Genre g = genreRepository.findById(genreId);
