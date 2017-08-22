@@ -1,0 +1,21 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Register</title>
+        <meta charset="UTF-8" />
+    </head>
+    <body>
+        <h1>Rekisteröidy kirjastopalveluihin</h1>
+
+        <form method="POST" th:action="@{/register}">
+                <div>
+                    <input type="text" name="username" placeholder="Username" />
+                    <input type="text" name="password" placeholder="password" /> 
+                </div>
+                <input type="submit" value="sign up" />
+                <p>
+                    <a th:href="@{/login}">Kirjaudu</a>
+                </p>
+            </form>
+    </body>
+</html>
