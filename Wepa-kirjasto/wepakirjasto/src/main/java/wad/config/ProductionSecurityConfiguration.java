@@ -39,8 +39,6 @@ public class ProductionSecurityConfiguration extends WebSecurityConfigurerAdapte
                 .logoutSuccessUrl("/login")
                 .permitAll()
                 .invalidateHttpSession(true);
-        
-        
     }
     
     
