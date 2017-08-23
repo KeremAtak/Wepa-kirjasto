@@ -1,15 +1,12 @@
 package wad.controller;
 
 import java.util.List;
-import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -36,14 +33,10 @@ public class GenreController {
     
     @Secured("ROLE_ADMIN")
     @RequestMapping(method = RequestMethod.POST)
-    public String addGenre(@Valid @ModelAttribute Genre genre, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            return "errorpage";
-        }
-        genreService.saveGenre(genre);
+    public String addGenre(@RequestParam String name, Model model) {
+        genreService.saveGenre(name);
         return "redirect:/genres";
     }
-    
     
     @Secured("ROLE_ADMIN")
     @RequestMapping(value = "{genreId}", method = RequestMethod.DELETE)
