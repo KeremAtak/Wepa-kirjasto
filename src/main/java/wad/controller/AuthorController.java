@@ -1,16 +1,20 @@
 package wad.controller;
 
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import wad.domain.Author;
 import wad.domain.Book;
+import wad.domain.Person;
 import wad.repository.AuthorRepository;
 import wad.repository.BookRepository;
 import wad.service.AuthorService;
@@ -35,8 +39,11 @@ public class AuthorController {
     
     @Secured("ROLE_ADMIN")
     @RequestMapping(method = RequestMethod.POST)
-    public String addAuthor(@RequestParam String name, @RequestParam String surname) {
-        authorService.saveAuthor(name, surname);
+    public String addAuthor(@Valid @ModelAttribute Author author, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "errorpage";
+        }
+        authorService.saveAuthor(author);
         return "redirect:/authors/";
     }
     

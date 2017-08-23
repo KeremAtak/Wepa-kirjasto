@@ -6,18 +6,20 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 @Entity
 public class Book extends AbstractPersistable<Long> {
     
-    @NotNull
-    @Size(min=1)
+    @NotBlank
     private String name;
     
     @NotNull
+    @Min(1)
     private int pages;
     
     @NotNull

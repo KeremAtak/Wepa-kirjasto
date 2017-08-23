@@ -43,8 +43,8 @@ public class AuthorService {
     }
     
     @Transactional
-    public void saveAuthor(String name, String surname) {
-        authorRepository.save(new Author(name, surname));
+    public void saveAuthor(Author author) {
+        authorRepository.save(author);
     }
     
     @Transactional

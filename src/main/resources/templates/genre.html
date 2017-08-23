@@ -21,10 +21,13 @@
                 <input type="text" name="pages" placeholder="sivut"/>
                 <input type="text" name="year" placeholder="vuosi"/><br/>
                 <input type="text" name="description" placeholder="kuvaus" style="width: 529px; height: 60px"/><br/>
+                
                 <select name="authorId">
                     <option th:each="author : ${authors}" th:value="${author.id}" th:text="${author.name + ' ' + author.surname}">author</option>
-                </select> 
-                <input type="submit" value="Lisää"/>
+                </select>
+                
+                
+                <input type="submit" value="Lisää kirja"/>
             </form>
         </div>
 

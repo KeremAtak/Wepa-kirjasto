@@ -43,8 +43,8 @@ public class GenreService {
     }
     
     @Transactional
-    public void saveGenre(String name) {
-        genreRepository.save(new Genre(name));
+    public void saveGenre(Genre genre) {
+        genreRepository.save(genre);
     }
     
     @Transactional
