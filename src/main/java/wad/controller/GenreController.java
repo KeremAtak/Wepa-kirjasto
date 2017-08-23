@@ -23,30 +23,18 @@ import wad.service.GenreService;
 public class GenreController {
     
     @Autowired
-    private BookRepository bookRepository;
-    
-    @Autowired
-    private PersonRepository personRepository;
-    
-    @Autowired
-    private GenreRepository genreRepository;
-    
-    @Autowired
-    private ReservationRepository reservationRepository;
-    
-    @Autowired
     private GenreService genreService;
     
     @RequestMapping(method = RequestMethod.GET)
     public String viewGenres(Model model) {
-        model.addAttribute("genres", genreRepository.findAll());
+        model.addAttribute("genres", genreService.findAllGenres());
         return "genres";
     }
     
     @Secured("ROLE_ADMIN")
     @RequestMapping(method = RequestMethod.POST)
     public String addGenre(@RequestParam String name, Model model) {
-        genreRepository.save(new Genre(name));
+        genreService.saveGenre(name);
         return "redirect:/genres";
     }
     

@@ -1,5 +1,6 @@
 package wad.service;
 
+import java.util.List;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,26 @@ public class PersonService {
     
     @Autowired
     private ReservationService reservationService;
+    
+    @Transactional
+    public List<Person> findAllPersons() {
+        return personRepository.findAll();
+    }
+    
+    @Transactional
+    public Person findPersonByUsername(String username) {
+        return personRepository.findByUsername(username);
+    }
+    
+    @Transactional
+    public Person findPersonById(Long personId) {
+        return personRepository.findById(personId);
+    }
+    
+    @Transactional
+    public void savePerson(Person person) {
+        personRepository.save(person);
+    }
     
     @Transactional
     public void deletePerson(Long personId) {

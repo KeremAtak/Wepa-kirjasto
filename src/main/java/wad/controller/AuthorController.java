@@ -14,40 +14,37 @@ import wad.domain.Book;
 import wad.repository.AuthorRepository;
 import wad.repository.BookRepository;
 import wad.service.AuthorService;
+import wad.service.BookService;
 
 @Controller
 @RequestMapping("/authors")
-@EnableGlobalMethodSecurity(securedEnabled = true)
-
+    
 public class AuthorController {
-    
-    @Autowired
-    private AuthorRepository authorRepository;
-    
-    @Autowired
-    private BookRepository bookRepository;
     
     @Autowired
     private AuthorService authorService;
     
+    @Autowired
+    private BookService bookService;
+    
     @RequestMapping(method = RequestMethod.GET)
     public String viewAuthors(Model model) {
-        model.addAttribute("authors", authorRepository.findAll());
+        model.addAttribute("authors", authorService.findAllAuthors());
         return "authors";
     }
     
     @Secured("ROLE_ADMIN")
     @RequestMapping(method = RequestMethod.POST)
     public String addAuthor(@RequestParam String name, @RequestParam String surname) {
-        authorRepository.save(new Author(name, surname));
+        authorService.saveAuthor(name, surname);
         return "redirect:/authors/";
     }
     
     @RequestMapping(value = "{authorId}", method = RequestMethod.GET)
     public String singleAuthor(@PathVariable("authorId") Long authorId, Model model) {
-        Author author = authorRepository.findById(authorId);
+        Author author = authorService.findAuthorById(authorId);
         
-        model.addAttribute("books", bookRepository.findByAuthor(author));
+        model.addAttribute("books", bookService.findBookByAuthor(author));
         model.addAttribute("author", author);
         return "author";
     }

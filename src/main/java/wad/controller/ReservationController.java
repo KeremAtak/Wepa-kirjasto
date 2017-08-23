@@ -17,6 +17,7 @@ import wad.domain.Reservation;
 import wad.domain.Person;
 import wad.repository.ReservationRepository;
 import wad.repository.PersonRepository;
+import wad.service.PersonService;
 import wad.service.ReservationService;
 
 @Controller
@@ -24,10 +25,7 @@ import wad.service.ReservationService;
 public class ReservationController {
     
     @Autowired
-    private PersonRepository personRepository;
-    
-    @Autowired
-    private ReservationRepository reservationRepository;
+    private PersonService personService;
     
     @Autowired
     private ReservationService reservationService;
@@ -35,22 +33,22 @@ public class ReservationController {
     @RequestMapping(method = RequestMethod.GET)
     public String returnMenu(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        model.addAttribute("currentUser", personRepository.findByUsername(authentication.getName()));
+        model.addAttribute("currentUser", personService.findPersonByUsername(authentication.getName()));
         return "index";
     }
     
     @RequestMapping(value = "{personId}", method = RequestMethod.GET)
     public String viewReservation(@PathVariable("personId") Long personId, Model model) {
-        Person person = personRepository.findById(personId);
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        model.addAttribute("person", person);
+        Person person = personService.findPersonById(personId);
 
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (person.getUsername().equals(authentication.getName())) {
-            List<Reservation> reservations = reservationRepository.findByPerson(person);
+            List<Reservation> reservations = reservationService.findReservationsByPerson(person);
+            model.addAttribute("person", person);
             model.addAttribute("reservations", reservations);
             return "reservations";
         }
-        model.addAttribute("person", personRepository.findByUsername(authentication.getName()));
+        model.addAttribute("person", personService.findPersonByUsername(authentication.getName()));
         return "index";
     }
     
@@ -59,9 +57,9 @@ public class ReservationController {
         reservationService.deleteReservation(reservationId);
         
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Person person = personRepository.findByUsername(authentication.getName());
-        model.addAttribute("person", person);
+        Person person = personService.findPersonByUsername(authentication.getName());
         String id = person.getId().toString();
+        model.addAttribute("person", person);
         return "redirect:/reservations/" + id;
     }
 }

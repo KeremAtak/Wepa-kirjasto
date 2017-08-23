@@ -26,14 +26,11 @@ import wad.service.PersonService;
 public class PersonController {
     
     @Autowired
-    private PersonRepository personRepository;
-    
-    @Autowired
     private PersonService personService;
     
     @RequestMapping(method = RequestMethod.GET)
     public String viewPersons(Model model) {
-        model.addAttribute("persons", personRepository.findAll());
+        model.addAttribute("persons", personService.findAllPersons());
         return "persons";
     }
     

@@ -1,5 +1,6 @@
 package wad.service;
 
+import java.util.List;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -18,6 +19,11 @@ public class ReservationService {
     
     @Autowired
     private PersonRepository personRepository;
+    
+    @Transactional
+    public List<Reservation> findReservationsByPerson(Person person) {
+        return reservationRepository.findByPerson(person);
+    }
     
     @Transactional
     public void deleteReservation(Long reservationid) {

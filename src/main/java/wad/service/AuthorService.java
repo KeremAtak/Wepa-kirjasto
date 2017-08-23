@@ -1,5 +1,6 @@
 package wad.service;
 
+import java.util.List;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,21 @@ public class AuthorService {
     
     @Autowired
     private BookService bookService;
+    
+    @Transactional
+    public List<Author> findAllAuthors() {
+        return authorRepository.findAll();
+    }
+    
+    @Transactional
+    public Author findAuthorById(Long authorId) {
+        return authorRepository.findById(authorId);
+    }
+    
+    @Transactional
+    public void saveAuthor(String name, String surname) {
+        authorRepository.save(new Author(name, surname));
+    }
     
     @Transactional
     public void deleteAuthor(Long authorId) {

@@ -18,36 +18,29 @@ import wad.repository.BookRepository;
 import wad.repository.GenreRepository;
 import wad.repository.ReservationRepository;
 import wad.repository.PersonRepository;
+import wad.service.AuthorService;
 import wad.service.BookService;
+import wad.service.GenreService;
 
 @Controller
 @RequestMapping("/genres/{genreId}")
 public class BookController {
     
     @Autowired
-    private BookRepository bookRepository;
-    
-    @Autowired
-    private PersonRepository personRepository;
-    
-    @Autowired
-    private GenreRepository genreRepository;
-    
-    @Autowired
-    private ReservationRepository reservationRepository;
-    
-    @Autowired
-    private AuthorRepository authorRepository;
+    private AuthorService authorService;
     
     @Autowired
     private BookService bookService;
+        
+    @Autowired
+    private GenreService genreService;
     
     @RequestMapping(method = RequestMethod.GET)
     public String viewBooks(@PathVariable("genreId") Long genreId, Model model) {
-        Genre genre = genreRepository.findById(genreId);
-        List<Book> books = bookRepository.findByGenre(genre);
-        List<Author> authors = authorRepository.findAll();
-        List<Genre> genres = genreRepository.findAll();
+        Genre genre = genreService.findGenreById(genreId);
+        List<Book> books = bookService.findBookByGenre(genre);
+        List<Author> authors = authorService.findAllAuthors();
+        List<Genre> genres = genreService.findAllGenres();
         
         model.addAttribute("genre", genre);
         model.addAttribute("books", books);
@@ -60,18 +53,18 @@ public class BookController {
     @RequestMapping(method = RequestMethod.POST)
     public String addBook(@PathVariable("genreId") Long genreId, @RequestParam String name, @RequestParam int pages, @RequestParam int year, 
             @RequestParam String description, @RequestParam Long authorId) {
-        Genre genre = genreRepository.findById(genreId);
-        Author author = authorRepository.findById(authorId);
+        Genre genre = genreService.findGenreById(genreId);
+        Author author = authorService.findAuthorById(authorId);
         
-        Book b = bookRepository.save(new Book(name, pages, year, description, genre, author));
+        Book b = bookService.saveBook(name, pages, year, description, genre, author);
         return "redirect:/genres/" + b.getGenre().getId() + "/" + b.getId();
     }
     
     @RequestMapping(value = "{bookId}", method = RequestMethod.GET)
     public String singleBook(@PathVariable("genreId") Long genreId, @PathVariable("bookId") Long bookId, Model model) {
-        Book book = bookRepository.findById(bookId);
+        Book book = bookService.findBookById(bookId);
         Author author = book.getAuthor();
-        Genre genre = genreRepository.findById(genreId);
+        Genre genre = genreService.findGenreById(genreId);
         
         model.addAttribute("genre", genre);
         model.addAttribute("book", book);

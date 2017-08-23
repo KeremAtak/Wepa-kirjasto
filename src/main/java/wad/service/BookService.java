@@ -1,11 +1,14 @@
 package wad.service;
 
+import java.util.List;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import wad.domain.Author;
 import wad.domain.Book;
+import wad.domain.Genre;
 import wad.domain.Person;
 import wad.domain.Reservation;
 import wad.repository.BookRepository;
@@ -26,6 +29,26 @@ public class BookService {
     
     @Autowired
     private ReservationService reservationService;
+    
+    @Transactional
+    public Book findBookById(Long bookId) {
+        return bookRepository.findById(bookId);
+    }
+    
+    @Transactional
+    public List<Book> findBookByAuthor(Author author) {
+        return bookRepository.findByAuthor(author);
+    }
+    
+    @Transactional
+    public List<Book> findBookByGenre(Genre genre) {
+        return bookRepository.findByGenre(genre);
+    }
+    
+    @Transactional
+    public Book saveBook(String name, int pages, int year, String description, Genre genre, Author author) {
+        return bookRepository.save(new Book(name, pages, year, description, genre, author));
+    }
     
     @Transactional
     public void addReservation(Long bookId) {

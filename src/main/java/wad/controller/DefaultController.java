@@ -17,48 +17,33 @@ import wad.repository.AuthorRepository;
 import wad.repository.BookRepository;
 import wad.repository.GenreRepository;
 import wad.repository.PersonRepository;
+import wad.service.PersonService;
 
 @Controller
-@EnableGlobalMethodSecurity(securedEnabled = true)
 @RequestMapping("*")
 public class DefaultController {
     
     @Autowired
-    private PersonRepository personRepository;
-    
-    @Autowired
-    private BookRepository bookRepository;
-    
-    @Autowired
-    private AuthorRepository authorRepository;
-    
-    @Autowired
-    private GenreRepository genreRepository;
-    
-    @PostConstruct
-    public void init() {
-        
-    }
+    private PersonService personService;
     
     @RequestMapping(method = RequestMethod.GET)
-    public String goToDefault(Model model) {
+    public String goToDefault() {
         return "redirect:/";
     }
     
-    
     @RequestMapping(value = "login", method = RequestMethod.GET)
-    public String viewLogin(Model model) {
+    public String viewLogin() {
         return "login";
     }
 
     @RequestMapping(value = "register", method = RequestMethod.GET)
-    public String viewRegistration(Model model) {
+    public String viewRegistration() {
         return "register";
     }
     
     @RequestMapping(value = "register", method = RequestMethod.POST) 
     public String registerUser(@ModelAttribute Person person, Model model) {
-        personRepository.save(person);
+        personService.savePerson(person);
         return "login";
     }
 }
