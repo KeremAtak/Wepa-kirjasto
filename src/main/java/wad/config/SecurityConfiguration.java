@@ -21,6 +21,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             
         http.authorizeRequests()
                 .antMatchers("/login", "/register").permitAll()
+                .antMatchers("/persons").hasAnyRole("ADMIN")
                 .anyRequest().authenticated();
 
         http.formLogin()
@@ -52,8 +53,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         public void init(AuthenticationManagerBuilder auth) throws Exception {
             auth.authenticationProvider(jpaAuthenticationProvider)
                 .inMemoryAuthentication()
-                .withUser("admin").password("password").roles("ADMIN")
-                .and().withUser("user").password("password").roles("USER");
+                .withUser("admin").password("password").roles("ADMIN");
 
         }
     }

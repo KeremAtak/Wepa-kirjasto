@@ -8,8 +8,8 @@
         
         <ul>
             <li th:each="person : ${persons}">
-                <small th:text="${person.username}">Person username</small>
-                <form th:action="@{/persons/{personId}(personId=${person.id})}" th:method="DELETE">
+                <p th:text="${person.username}">Person username</p>
+                <form th:action="@{/persons/{personId}(personId=${person.id})}" th:method="DELETE" sec:authorize="hasRole('ROLE_ADMIN')">
                     <input type="submit" value="Poista käyttäjä"/>            
                 </form>
             </li>
