@@ -3,6 +3,10 @@ package wad.service;
 import java.util.List;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import wad.domain.Author;
 import wad.domain.Book;
@@ -24,6 +28,13 @@ public class AuthorService {
     @Transactional
     public List<Author> findAllAuthors() {
         return authorRepository.findAll();
+    }
+    
+    @Transactional
+    public List<Author> findAllAuthorsOrdered() {
+        Pageable pageable = new PageRequest(0, Integer.MAX_VALUE, Sort.Direction.ASC, "surname");
+        Page<Author> authorPage = authorRepository.findAll(pageable);
+        return authorPage.getContent();
     }
     
     @Transactional

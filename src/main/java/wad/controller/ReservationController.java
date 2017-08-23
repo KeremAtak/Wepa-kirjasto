@@ -30,13 +30,6 @@ public class ReservationController {
     @Autowired
     private ReservationService reservationService;
     
-    @RequestMapping(method = RequestMethod.GET)
-    public String returnMenu(Model model) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        model.addAttribute("currentUser", personService.findPersonByUsername(authentication.getName()));
-        return "index";
-    }
-    
     @RequestMapping(value = "{personId}", method = RequestMethod.GET)
     public String viewReservation(@PathVariable("personId") Long personId, Model model) {
         Person person = personService.findPersonById(personId);

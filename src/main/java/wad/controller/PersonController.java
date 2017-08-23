@@ -30,7 +30,7 @@ public class PersonController {
     
     @RequestMapping(method = RequestMethod.GET)
     public String viewPersons(Model model) {
-        model.addAttribute("persons", personService.findAllPersons());
+        model.addAttribute("persons", personService.findAllPersonsOrdered());
         return "persons";
     }
     

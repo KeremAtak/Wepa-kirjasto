@@ -3,6 +3,10 @@ package wad.service;
 import java.util.List;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -36,12 +40,12 @@ public class BookService {
     }
     
     @Transactional
-    public List<Book> findBookByAuthor(Author author) {
+    public List<Book> findBooksByAuthor(Author author) {
         return bookRepository.findByAuthor(author);
     }
     
     @Transactional
-    public List<Book> findBookByGenre(Genre genre) {
+    public List<Book> findBooksByGenre(Genre genre) {
         return bookRepository.findByGenre(genre);
     }
     

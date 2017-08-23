@@ -3,12 +3,15 @@ package wad.service;
 import java.util.List;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import wad.domain.Book;
 import wad.domain.Genre;
 import wad.repository.BookRepository;
 import wad.repository.GenreRepository;
-import wad.repository.ReservationRepository;
 
 @Service
 public class GenreService {
@@ -25,6 +28,13 @@ public class GenreService {
     @Transactional
     public List<Genre> findAllGenres() {
         return genreRepository.findAll();
+    }
+    
+    @Transactional
+    public List<Genre> findAllGenresOrdered() {
+        Pageable pageable = new PageRequest(0, Integer.MAX_VALUE, Sort.Direction.ASC, "name");
+        Page<Genre> genrePage = genreRepository.findAll(pageable);
+        return genrePage.getContent();
     }
     
     @Transactional

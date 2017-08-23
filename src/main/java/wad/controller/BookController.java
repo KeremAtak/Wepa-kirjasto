@@ -38,9 +38,9 @@ public class BookController {
     @RequestMapping(method = RequestMethod.GET)
     public String viewBooks(@PathVariable("genreId") Long genreId, Model model) {
         Genre genre = genreService.findGenreById(genreId);
-        List<Book> books = bookService.findBookByGenre(genre);
-        List<Author> authors = authorService.findAllAuthors();
-        List<Genre> genres = genreService.findAllGenres();
+        List<Book> books = bookService.findBooksByGenre(genre);
+        List<Author> authors = authorService.findAllAuthorsOrdered();
+        List<Genre> genres = genreService.findAllGenresOrdered();
         
         model.addAttribute("genre", genre);
         model.addAttribute("books", books);

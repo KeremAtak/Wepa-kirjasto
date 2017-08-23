@@ -27,7 +27,7 @@ public class GenreController {
     
     @RequestMapping(method = RequestMethod.GET)
     public String viewGenres(Model model) {
-        model.addAttribute("genres", genreService.findAllGenres());
+        model.addAttribute("genres", genreService.findAllGenresOrdered());
         return "genres";
     }
     

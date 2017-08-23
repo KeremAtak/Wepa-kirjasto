@@ -29,7 +29,7 @@ public class AuthorController {
     
     @RequestMapping(method = RequestMethod.GET)
     public String viewAuthors(Model model) {
-        model.addAttribute("authors", authorService.findAllAuthors());
+        model.addAttribute("authors", authorService.findAllAuthorsOrdered());
         return "authors";
     }
     
@@ -44,7 +44,7 @@ public class AuthorController {
     public String singleAuthor(@PathVariable("authorId") Long authorId, Model model) {
         Author author = authorService.findAuthorById(authorId);
         
-        model.addAttribute("books", bookService.findBookByAuthor(author));
+        model.addAttribute("books", bookService.findBooksByAuthor(author));
         model.addAttribute("author", author);
         return "author";
     }
