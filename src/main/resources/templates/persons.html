@@ -1,0 +1,19 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.springframework.org/security/tags">
+    <head>
+        <title>Persons</title>
+        <meta charset="UTF-8" />
+    </head>
+    <body>
+        <h2>Käyttäjät</h2>
+        
+        <ul>
+            <li th:each="person : ${persons}">
+                <small th:text="${person.username}">Person username</small>
+                <form th:action="@{/persons/{personId}(personId=${person.id})}" th:method="DELETE">
+                    <input type="submit" value="Poista käyttäjä"/>            
+                </form>
+            </li>
+        </ul>
+        <a th:href="@{/}">Valikkoon</a>
+    </body>
+</html>

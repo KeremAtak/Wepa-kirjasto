@@ -29,7 +29,7 @@
         <a th:href="@{/authors/{authorId}(authorId=${book.author.id})}" th:text="${author.name + ' ' + author.surname}">author name</a>
         <div sec:authorize="hasRole('ROLE_USER')">
             <form th:action="@{/genres/{genreId}/{bookId}(genreId=${book.genre.id},bookId=${book.id})}" method="POST">
-                <input type="submit" value="Varaa"/>            
+                <input type="submit" value="Varaa kirja"/>            
             </form>
         </div>
         
