@@ -44,10 +44,11 @@ public class GenreController {
             model.addAttribute("text", "Virhe genren luonnissa. Genre on jo olemassa.");
             return "errorpage";
         }
-            if (!genreService.validateGenre(genre)) {
-                model.addAttribute("text", "Virhe genren luonnissa. Tarkasta nimen pituus.");
-                return "errorpage";
-            }
+        
+        if (!genreService.validateGenre(genre)) {
+            model.addAttribute("text", "Virhe genren luonnissa. Tarkasta nimen pituus.");
+            return "errorpage";
+        }
         genreService.saveGenre(name);
         return "redirect:/genres";
     }

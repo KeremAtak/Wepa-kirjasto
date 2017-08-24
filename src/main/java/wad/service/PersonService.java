@@ -8,14 +8,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import wad.domain.Book;
-import wad.domain.Genre;
 import wad.domain.Person;
 import wad.domain.Reservation;
-import wad.repository.BookRepository;
-import wad.repository.GenreRepository;
 import wad.repository.PersonRepository;
 import wad.repository.ReservationRepository;
+import wad.valid.PersonValidator;
 
 @Service
 public class PersonService {
@@ -29,6 +26,8 @@ public class PersonService {
     
     @Autowired
     private ReservationService reservationService;
+    
+    private PersonValidator personValidator = new PersonValidator();
     
     @Transactional
     public List<Person> findAllPersons() {
@@ -64,5 +63,16 @@ public class PersonService {
             reservationService.deleteReservation(r.getId());
         }
         personRepository.delete(p);
+    }
+    
+    public boolean validateRegistration(Person person) {
+        return personValidator.validateRegistration(person);
+    }
+
+    public boolean validateRegistrationUniqueness(Person person) {
+        if (findPersonByUsername(person.getUsername()) != null || person.getUsername().equals("admin")) {
+            return false;
+        }
+        return true;
     }
 }
