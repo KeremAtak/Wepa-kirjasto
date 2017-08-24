@@ -20,7 +20,7 @@ public class ProductionSecurityConfiguration extends WebSecurityConfigurerAdapte
         http.csrf().disable();
             
         http.authorizeRequests()
-                .antMatchers("/login", "/register").permitAll()
+                .antMatchers("/login", "/register", "/errorpage").permitAll()
                 .antMatchers("/persons").hasAnyRole("ADMIN")
                 .anyRequest().authenticated();
 

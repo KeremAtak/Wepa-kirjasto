@@ -46,10 +46,10 @@ public class BookService {
     }
     
     @Transactional
-    public Book saveBook(String name, int pages, int year, String description, Genre genre, Author author) {
-        return bookRepository.save(new Book(name, pages, year, description, genre, author));
+    public Book saveBook(Book book) {
+        return bookRepository.save(book);
     }
-    
+
     @Transactional
     public void addReservation(Long bookId) {
         Book book = bookRepository.findById(bookId);
@@ -78,4 +78,5 @@ public class BookService {
         
         bookRepository.delete(bookId);
     }
+    
 }

@@ -46,4 +46,10 @@ public class DefaultController {
         personService.savePerson(person);
         return "login";
     }
+    
+    @RequestMapping(value = "/errorpage", method = RequestMethod.GET) 
+    public String viewErrorpage(@ModelAttribute("text") String text, Model model) {
+        model.addAttribute("text", text);
+        return "errorpage";
+    }
 }
