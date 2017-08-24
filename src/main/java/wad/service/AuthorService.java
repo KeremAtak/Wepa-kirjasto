@@ -12,6 +12,7 @@ import wad.domain.Author;
 import wad.domain.Book;
 import wad.repository.AuthorRepository;
 import wad.repository.BookRepository;
+import wad.valid.AuthorValidator;
 
 @Service
 public class AuthorService {
@@ -24,6 +25,8 @@ public class AuthorService {
     
     @Autowired
     private BookService bookService;
+    
+    private AuthorValidator authorValidator = new AuthorValidator();
     
     @Transactional
     public List<Author> findAllAuthors() {
@@ -43,8 +46,8 @@ public class AuthorService {
     }
     
     @Transactional
-    public void saveAuthor(String name, String surname) {
-        authorRepository.save(new Author(name, surname));
+    public void saveAuthor(Author author) {
+        authorRepository.save(author);
     }
     
     @Transactional
@@ -54,6 +57,14 @@ public class AuthorService {
             bookService.deleteBook(b.getId());
         }
         authorRepository.delete(a);
+    }
+    
+    public boolean validateAuthorInput(Object name, Object surname) {
+        return authorValidator.validateAuthorInput(name, surname);
+    }
+    
+    public boolean validateAuthor(Author author) {
+        return authorValidator.validateAuthor(author);
     }
 }
  

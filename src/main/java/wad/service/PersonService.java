@@ -61,7 +61,7 @@ public class PersonService {
     public void deletePerson(Long personId) {
         Person p = personRepository.findById(personId);
         for (Reservation r : reservationRepository.findByPerson(p)) {
-            reservationService.deleteReservation(p.getId());
+            reservationService.deleteReservation(r.getId());
         }
         personRepository.delete(p);
     }

@@ -35,8 +35,17 @@ public class AuthorController {
     
     @Secured("ROLE_ADMIN")
     @RequestMapping(method = RequestMethod.POST)
-    public String addAuthor(@RequestParam String name, @RequestParam String surname) {
-        authorService.saveAuthor(name, surname);
+    public String addAuthor(@RequestParam String name, @RequestParam String surname, Model model) {
+        if (!authorService.validateAuthorInput(name, surname)) {
+            model.addAttribute("text", "Virhe kirjailijan luonnissa. Olivathan syötteet varmasti merkkijonoja?");
+            return "errorpage";
+        }
+        Author author = new Author(name, surname);
+        if (!authorService.validateAuthor(author)) {
+            model.addAttribute("text", "Virhe kirjailijan luonnissa. Tarkasta etu-ja sukunimen pituus");
+            return "errorpage";
+        }
+        authorService.saveAuthor(author);
         return "redirect:/authors/";
     }
     

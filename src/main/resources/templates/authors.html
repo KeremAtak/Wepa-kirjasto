@@ -17,8 +17,8 @@
         <div sec:authorize="hasRole('ROLE_ADMIN')">
             <h3>Lisää kirjailija</h3>
             <form action="/authors" method="POST">
-                <input type="text" name="name" placeholder="etunimi"/>
-                <input type="text" name="surname" placeholder="sukunimi"/>
+                <input type="text" name="name" placeholder="etunimi (1-30)"/>
+                <input type="text" name="surname" placeholder="sukunimi (1-30)"/>
                 <input type="submit"/>
             </form>
         </div>

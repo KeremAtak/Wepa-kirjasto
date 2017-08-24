@@ -12,6 +12,7 @@ import wad.domain.Book;
 import wad.domain.Genre;
 import wad.repository.BookRepository;
 import wad.repository.GenreRepository;
+import wad.valid.GenreValidator;
 
 @Service
 public class GenreService {
@@ -25,6 +26,8 @@ public class GenreService {
     @Autowired
     private BookService bookService;
     
+    private GenreValidator genreValidator = new GenreValidator();
+    
     @Transactional
     public List<Genre> findAllGenres() {
         return genreRepository.findAll();
@@ -37,16 +40,22 @@ public class GenreService {
         return genrePage.getContent();
     }
     
+    
     @Transactional
     public Genre findGenreById(Long genreId) {
         return genreRepository.findById(genreId);
     }
     
     @Transactional
+    public Genre findGenreByName(String name) {
+        return genreRepository.findByName(name);
+    }
+    
+    @Transactional
     public void saveGenre(String name) {
         genreRepository.save(new Genre(name));
     }
-    
+   
     @Transactional
     public void deleteGenre(Long genreId) {
         Genre g = genreRepository.findById(genreId);
@@ -54,5 +63,20 @@ public class GenreService {
             bookService.deleteBook(b.getId());
         }
         genreRepository.delete(g);
+    }
+    
+    public boolean validateGenreInput(Object name) {
+        return genreValidator.validateGenreInput(name);
+    }
+    
+    public boolean validateGenre(Genre genre) {
+        return genreValidator.validateGenre(genre);
+    }
+    
+    public boolean validateGenreUniqueness(Genre genre) {
+        if (findGenreByName(genre.getName()) != null) {
+            return false;
+        }
+        return true;
     }
 }

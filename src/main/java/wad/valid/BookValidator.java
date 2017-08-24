@@ -1,8 +1,8 @@
-package wad.validator;
+package wad.valid;
 
 import wad.domain.Book;
 
-public class BookValidator {
+public class BookValidator extends Validator {
 
     public boolean validateBookInputs(Object genreId, Object authorId, Object name, 
                                     Object pages, Object year, Object description) {
@@ -23,23 +23,4 @@ public class BookValidator {
         return true;
     }
     
-    private static boolean isInteger(Object obj) {
-        try {
-            String input = (String)obj;
-            int i = Integer.parseInt(input);
-        } catch (NumberFormatException nfe) {
-            return false;
-        }
-        return true;
-    }
-    
-    private static boolean isLong(Object obj) {
-        try {
-            String input = (String)obj;
-            Long l = Long.parseLong(input);
-        } catch (NumberFormatException nfe) {
-            return false;
-        }
-        return true;
-    }
 }

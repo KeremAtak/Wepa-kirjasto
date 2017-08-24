@@ -14,6 +14,7 @@ import wad.domain.Reservation;
 import wad.repository.BookRepository;
 import wad.repository.PersonRepository;
 import wad.repository.ReservationRepository;
+import wad.valid.BookValidator;
 
 @Service
 public class BookService {
@@ -29,6 +30,8 @@ public class BookService {
     
     @Autowired
     private ReservationService reservationService;
+    
+    private BookValidator bookValidator = new BookValidator();
     
     @Transactional
     public Book findBookById(Long bookId) {
@@ -77,6 +80,15 @@ public class BookService {
         }
         
         bookRepository.delete(bookId);
+    }
+
+    public boolean validateBookInputs(Object genreId, Object authorId, Object name, 
+                                   Object pages, Object year, Object description) {
+       return bookValidator.validateBookInputs(genreId, authorId, name, pages, year, description);
+   }
+    
+    public boolean validateBook(Book book) {
+        return bookValidator.validateBook(book);
     }
     
 }

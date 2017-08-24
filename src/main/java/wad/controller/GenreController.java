@@ -17,6 +17,7 @@ import wad.repository.GenreRepository;
 import wad.repository.ReservationRepository;
 import wad.repository.PersonRepository;
 import wad.service.GenreService;
+import wad.valid.GenreValidator;
 
 @Controller
 @RequestMapping("/genres")
@@ -33,7 +34,20 @@ public class GenreController {
     
     @Secured("ROLE_ADMIN")
     @RequestMapping(method = RequestMethod.POST)
-    public String addGenre(@RequestParam String name, Model model) {
+    public String addGenre(@RequestParam String name, Model model) { 
+        if (!genreService.validateGenreInput(name)) {
+            model.addAttribute("text", "Virhe genren luonnissa. Olihan syöte varmasti merkkijono?");
+            return "errorpage";
+        }
+        Genre genre = new Genre(name);
+        if (!genreService.validateGenreUniqueness(genre)) {
+            model.addAttribute("text", "Virhe genren luonnissa. Genre on jo olemassa.");
+            return "errorpage";
+        }
+            if (!genreService.validateGenre(genre)) {
+                model.addAttribute("text", "Virhe genren luonnissa. Tarkasta nimen pituus.");
+                return "errorpage";
+            }
         genreService.saveGenre(name);
         return "redirect:/genres";
     }

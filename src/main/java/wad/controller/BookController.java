@@ -13,7 +13,7 @@ import wad.domain.*;
 import wad.service.AuthorService;
 import wad.service.BookService;
 import wad.service.GenreService;
-import wad.validator.BookValidator;
+import wad.valid.BookValidator;
 
 @Controller
 @RequestMapping("/genres/{genreId}")
@@ -32,7 +32,7 @@ public class BookController {
     @RequestMapping(method = RequestMethod.GET)
     public String viewBooks(@PathVariable("genreId") Long genreId, Model model) {
         if (authorService.findAllAuthors().isEmpty()) {
-            return "redirect:/genres";
+            return "redirect:/authors";
         }
         
         Genre genre = genreService.findGenreById(genreId);
@@ -51,8 +51,7 @@ public class BookController {
     @RequestMapping(method = RequestMethod.POST)
     public String addBook(@PathVariable("genreId") String genreId, @RequestParam String name, @RequestParam String pages, 
             @RequestParam String year, @RequestParam String description, @RequestParam String authorId, Model model) {
-        BookValidator validator = new BookValidator();
-        if(!validator.validateBookInputs(genreId, authorId, name, pages, year, description)) {
+        if (!bookService.validateBookInputs(genreId, authorId, name, pages, year, description)) {
             model.addAttribute("text", "Virhe kirjan luonnissa. Lisäsithän esimerkiksi sivut ja vuodet numeroina?");
             return "errorpage";
         }
@@ -61,8 +60,8 @@ public class BookController {
         
         Book b = new Book(name, Integer.parseInt(pages), Integer.parseInt(year), description, genre, author);
         
-        if(!validator.validateBook(b)) {
-            model.addAttribute("text", "Virhe kirjan luonnissa. Tarkista syötteet");
+        if (!bookService.validateBook(b)) {
+            model.addAttribute("text", "Virhe kirjan luonnissa. Tarkista että syötteiden ehdot täyttyvät.");
             return "errorpage";
         }
         bookService.saveBook(b);
@@ -80,6 +79,11 @@ public class BookController {
         model.addAttribute("book", book);
         model.addAttribute("author", author);
         
+        if (book.getReservation() == null) {
+            model.addAttribute("status", "varaa");
+        } else {
+            model.addAttribute("status", "varattu");
+        }
         return "book";
     }
     
