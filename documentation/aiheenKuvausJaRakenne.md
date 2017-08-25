@@ -22,4 +22,5 @@ niihin liittyvät kirjat poistetaan. Admin ei voi varata kirjoja, tarkastella k�
 varauksia.
 
 <h3>Käyttötapaukset:</h3>
+
 ![kayttotapauskaavio](/documentation/kayttotapauskaavio.jpg)
