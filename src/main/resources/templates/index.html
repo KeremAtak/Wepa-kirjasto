@@ -11,11 +11,11 @@
         <strong sec:authorize="hasRole('ROLE_USER')" th:text="'Tervetuloa kirjastopalveluun ' + ${person.username}">username</strong>
 
         <p>
-            <a th:href="@{/genres}">Kirjat</a>
+            <a th:href="@{/genres}">Kirjat genreittäin</a>
         </p>
         
         <p>
-            <a th:href="@{/authors}">Kirjailijat</a>
+            <a th:href="@{/authors}">Kirjat kirjailijoittain</a>
         </p>
         
         <p sec:authorize="hasRole('ROLE_USER')">

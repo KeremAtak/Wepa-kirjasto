@@ -24,11 +24,13 @@ public class PersonService {
     
     private PersonValidator personValidator = new PersonValidator();
     
+    //palauttaa kaikki käyttäjät
     @Transactional
     public List<Person> findAllPersons() {
         return personRepository.findAll();
     }
     
+    //palauttaa kaikki käyttäjät aakkosjärjestyksessä
     @Transactional
     public List<Person> findAllPersonsOrdered() {
         Pageable pageable = new PageRequest(0, Integer.MAX_VALUE, Sort.Direction.ASC, "username");
@@ -36,21 +38,25 @@ public class PersonService {
         return personPage.getContent();
     }
     
-    @Transactional
-    public Person findPersonByUsername(String username) {
-        return personRepository.findByUsername(username);
-    }
-    
+    //palauttaa käyttäjän tunnuksen perusteella
     @Transactional
     public Person findPersonById(Long personId) {
         return personRepository.findById(personId);
     }
     
+    //palauttaa käyttäjän käyttäjänimen perusteella
+    @Transactional
+    public Person findPersonByUsername(String username) {
+        return personRepository.findByUsername(username);
+    }
+    
+    //tallentaa käyttäjän tietokantaan
     @Transactional
     public void savePerson(Person person) {
         personRepository.save(person);
     }
     
+    //poistaa käyttäjän tietokannasta ja kaikki käyttäjän varaukset
     @Transactional
     public void deletePerson(Long personId) {
         Person p = personRepository.findById(personId);
@@ -60,10 +66,12 @@ public class PersonService {
         personRepository.delete(p);
     }
     
-    public boolean validateRegistration(String username, String password) {
+    //palauttaa validoituiko rekisteröinnin syötteet
+    public boolean validateRegistrationInput(String username, String password) {
         return personValidator.validateRegistration(username, password);
     }
 
+    //palauttaa löytyikö käyttäjä tietokannasta
     public boolean validateRegistrationUniqueness(Person person) {
         if (findPersonByUsername(person.getUsername()) != null || person.getUsername().equals("admin")) {
             return false;

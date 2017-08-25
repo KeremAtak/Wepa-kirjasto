@@ -16,21 +16,25 @@ public class DefaultController {
     @Autowired
     private PersonService personService;
     
+    //ohjaa takaisin indeksiin jos polkua ei ole olemassa
     @RequestMapping(method = RequestMethod.GET)
     public String goToIndex() {
         return "redirect:/";
     }
     
+    //palauttaa näkymään kirjautumissivun
     @RequestMapping(value = "login", method = RequestMethod.GET)
     public String viewLogin() {
         return "login";
     }
 
+    //palauttaa näkymään rekisteröimissivun
     @RequestMapping(value = "register", method = RequestMethod.GET)
     public String viewRegistration() {
         return "register";
     }
     
+    //palauttaa näkymään rekisteröimissivun, käyttäjä on kirjautunut käyttäjä
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String viewMenu(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -39,16 +43,18 @@ public class DefaultController {
         return "index";
     }
     
+    //palauttaa virheviestin näkymän missä viesti on talletettuna modeliin
     @RequestMapping(value = "/errorpage", method = RequestMethod.GET) 
     public String viewErrorpage(@ModelAttribute("text") String text, Model model) {
         model.addAttribute("text", text);
         return "errorpage";
     }
     
+    //Lisää käyttäjän tai palauttaa näkymässä virheviestin
     @RequestMapping(value = "register", method = RequestMethod.POST) 
     public String registerUser(@RequestParam String username, @RequestParam String password, Model model) {
         
-         if (!personService.validateRegistration(username, password)) {
+         if (!personService.validateRegistrationInput(username, password)) {
             model.addAttribute("text", "Virhe käyttäjän luonnissa. Tarkista nimen ja salasanan pituudet.");
             return "errorpage";
         }

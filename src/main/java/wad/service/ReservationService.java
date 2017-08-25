@@ -16,11 +16,13 @@ public class ReservationService {
     @Autowired
     private PersonRepository personRepository;
     
+    //palauttaa varaukset käyttäjän mukaan
     @Transactional
     public List<Reservation> findReservationsByPerson(Person person) {
         return reservationRepository.findByPerson(person);
     }
     
+    //poistaa varauksen tietokannasta sekä tämän yhteydet kirjaan ja käyttäjään
     @Transactional
     public void deleteReservation(Long reservationid) {
         Reservation reservation = reservationRepository.findById(reservationid);

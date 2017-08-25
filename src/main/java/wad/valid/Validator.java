@@ -2,6 +2,7 @@ package wad.valid;
 
 public abstract class Validator {
 
+    //palauttaako onko objekti kokonaisluku
     protected static boolean isInteger(Object obj) {
         try {
             String input = (String)obj;
@@ -12,6 +13,7 @@ public abstract class Validator {
         return true;
     }
     
+    //palauttaako onko objekti tyypiltään Long
     protected static boolean isLong(Object obj) {
         try {
             String input = (String)obj;

@@ -27,26 +27,31 @@ public class BookService {
     
     private BookValidator bookValidator = new BookValidator();
     
+    //palauttaa kirjan tämän tunnuksen perusteella
     @Transactional
     public Book findBookById(Long bookId) {
         return bookRepository.findById(bookId);
     }
     
+    //palauttaa kaikki kirjat kirjailijan mukaan
     @Transactional
     public List<Book> findBooksByAuthor(Author author) {
         return bookRepository.findByAuthor(author);
     }
     
+    //palauttaa kaikki kirjat genren mukaan
     @Transactional
     public List<Book> findBooksByGenre(Genre genre) {
         return bookRepository.findByGenre(genre);
     }
     
+    //tallentaa kirjan tietokantaan
     @Transactional
     public Book saveBook(Book book) {
         return bookRepository.save(book);
     }
 
+    //lisää kirjalle varauksen
     @Transactional
     public void addReservation(Long bookId) {
         Book book = bookRepository.findById(bookId);
@@ -64,6 +69,8 @@ public class BookService {
         }
     }
     
+    //poistaa kirjan tietokannasta, tämän kirjan yhteydet kirjailijan ja genreen
+    //sekä poistaa kirjan mahdollisen varauksen
     @Transactional
     public void deleteBook(Long bookId) {
         Book b = bookRepository.findById(bookId);
@@ -76,11 +83,13 @@ public class BookService {
         bookRepository.delete(bookId);
     }
 
+    //palauttaa validoituvaitko kirjan syötteet
     public boolean validateBookInputs(Object genreId, Object authorId, Object title, 
                                    Object pages, Object year, Object description) {
        return bookValidator.validateBookInputs(genreId, authorId, title, pages, year, description);
-   }
+    }
     
+    //palauttaa validoituiko kirja
     public boolean validateBook(Book book) {
         return bookValidator.validateBook(book);
     }

@@ -23,11 +23,13 @@ public class GenreService {
     
     private GenreValidator genreValidator = new GenreValidator();
     
+    //palauttaa kaikki genret
     @Transactional
     public List<Genre> findAllGenres() {
         return genreRepository.findAll();
     }
     
+    //palauttaa kaikki genret aakkosjärjestyksessä
     @Transactional
     public List<Genre> findAllGenresOrdered() {
         Pageable pageable = new PageRequest(0, Integer.MAX_VALUE, Sort.Direction.ASC, "name");
@@ -35,22 +37,25 @@ public class GenreService {
         return genrePage.getContent();
     }
     
-    
+    //palauttaa genren tunnuksen mukaan
     @Transactional
     public Genre findGenreById(Long genreId) {
         return genreRepository.findById(genreId);
     }
     
+    //palauttaa genren nimen mukaan
     @Transactional
     public Genre findGenreByName(String name) {
-        return genreRepository.findByName(name);
+        return genreRepository.findByName(name.toLowerCase());
     }
     
+    //tallentaa genren tietokantaan
     @Transactional
     public void saveGenre(String name) {
-        genreRepository.save(new Genre(name));
+        genreRepository.save(new Genre(name.toLowerCase()));
     }
    
+    //poistaa genren tietokannasta sekä poistaa kaikki genreen liittyvät kirjat
     @Transactional
     public void deleteGenre(Long genreId) {
         Genre g = genreRepository.findById(genreId);
@@ -60,16 +65,19 @@ public class GenreService {
         genreRepository.delete(g);
     }
     
+    //palauttaa validoituiko genren syöte
     public boolean validateGenreInput(Object name) {
         return genreValidator.validateGenreInput(name);
     }
     
+    //palauttaa validoituiko genre
     public boolean validateGenre(Genre genre) {
         return genreValidator.validateGenre(genre);
     }
     
+    //palauttaa löytyikö genre tietokannasta
     public boolean validateGenreUniqueness(Genre genre) {
-        if (findGenreByName(genre.getName()) != null) {
+        if (findGenreByName(genre.getName().toLowerCase()) != null) {
             return false;
         }
         return true;

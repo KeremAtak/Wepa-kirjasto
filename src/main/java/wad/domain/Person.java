@@ -37,6 +37,7 @@ public class Person extends AbstractPersistable<Long> {
         return password;
     }
     
+    //suolalla suojataan salasana
     public void setPassword(String password) {
         this.salt = BCrypt.gensalt();
         this.password = BCrypt.hashpw(password, salt);

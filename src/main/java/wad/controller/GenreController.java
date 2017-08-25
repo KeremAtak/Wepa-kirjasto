@@ -15,12 +15,14 @@ public class GenreController {
     @Autowired
     private GenreService genreService;
     
+    //Palauttaa näkymän missä genret ovat aakkosjärjestyksessä.
     @RequestMapping(method = RequestMethod.GET)
     public String viewGenres(Model model) {
         model.addAttribute("genres", genreService.findAllGenresOrdered());
         return "genres";
     }
     
+    //Lisää genren tai palauttaa näkymässä virheviestin.
     @Secured("ROLE_ADMIN")
     @RequestMapping(method = RequestMethod.POST)
     public String addGenre(@RequestParam String name, Model model) { 
@@ -42,6 +44,7 @@ public class GenreController {
         return "redirect:/genres";
     }
     
+    //Poistaa yksittäisen genren tämän tunnisteen perusteella
     @Secured("ROLE_ADMIN")
     @RequestMapping(value = "{genreId}", method = RequestMethod.DELETE)
     public String deleteGenre(@PathVariable("genreId") Long genreId, Model model) {

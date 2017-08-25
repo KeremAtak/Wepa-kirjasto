@@ -27,7 +27,7 @@ public class BookController {
     @Autowired
     private GenreService genreService;
     
-    
+    //Palauttaa näkymän missä genren kirjat näkyvät
     @RequestMapping(method = RequestMethod.GET)
     public String viewBooks(@PathVariable("genreId") Long genreId, Model model) {
         if (authorService.findAllAuthors().isEmpty()) {
@@ -46,6 +46,7 @@ public class BookController {
         return "genre";
     }
     
+    //Lisää kirjan tai palauttaa näkymässä virheviestin
     @Secured("ROLE_ADMIN")
     @RequestMapping(method = RequestMethod.POST)
     public String addBook(@PathVariable("genreId") String genreId, @RequestParam String title, @RequestParam String pages, 
@@ -67,7 +68,7 @@ public class BookController {
         return "redirect:/genres/{genreId}/" + b.getId();
     }
     
-    
+    //Palauttaa yksittäisen kirjan tämän tunnisteen perusteella
     @RequestMapping(value = "{bookId}", method = RequestMethod.GET)
     public String singleBook(@PathVariable("genreId") Long genreId, @PathVariable("bookId") Long bookId, Model model) {
         Book book = bookService.findBookById(bookId);
@@ -86,12 +87,14 @@ public class BookController {
         return "book";
     }
     
+    //Lisää varauksen käyttäjälle
     @RequestMapping(value = "{bookId}", method = RequestMethod.POST)
     public String addReservation(@PathVariable("bookId") Long bookId, Model model) {
         bookService.addReservation(bookId);
         return "redirect:/genres/{genreId}/{bookId}";
     }
     
+    //Poistaa yksittäisen kirjan tämän tunnisteen perusteella
     @Secured("ROLE_ADMIN")
     @RequestMapping(value = "{bookId}", method = RequestMethod.DELETE)
     public String deleteBook(@PathVariable("bookId") Long bookId, Model model) {

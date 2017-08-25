@@ -22,8 +22,10 @@ public class ReservationController {
     @Autowired
     private ReservationService reservationService;
     
+    //palauttaa yksittäisen henkilön varauksien näkymän tai palauttaa indeksin näkymän
+    //jos polussa olevan henkilön tunnus ei vastaa kirjautuneen käyttäjän tunnusta
     @RequestMapping(value = "{personId}", method = RequestMethod.GET)
-    public String viewReservation(@PathVariable("personId") Long personId, Model model) {
+    public String viewReservations(@PathVariable("personId") Long personId, Model model) {
         Person person = personService.findPersonById(personId);
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -37,6 +39,7 @@ public class ReservationController {
         return "index";
     }
     
+    //poistaa yksittäisen varauksen tämän tunnisteen perusteella
     @RequestMapping(value = "{reservationId}", method = RequestMethod.DELETE)
     public String deleteReservation(@PathVariable("reservationId") Long reservationId, Model model) {
         reservationService.deleteReservation(reservationId);

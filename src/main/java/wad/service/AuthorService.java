@@ -24,11 +24,13 @@ public class AuthorService {
     
     private AuthorValidator authorValidator = new AuthorValidator();
     
+    //palauttaa kaikki kirjailijat
     @Transactional
     public List<Author> findAllAuthors() {
         return authorRepository.findAll();
     }
     
+    //palauttaa kaikki kirjailijat aakkosjärjestyksessä
     @Transactional
     public List<Author> findAllAuthorsOrdered() {
         Pageable pageable = new PageRequest(0, Integer.MAX_VALUE, Sort.Direction.ASC, "surname");
@@ -36,16 +38,19 @@ public class AuthorService {
         return authorPage.getContent();
     }
     
+    //palauttaa kirjailijan tunnisteen perusteella
     @Transactional
     public Author findAuthorById(Long authorId) {
         return authorRepository.findById(authorId);
     }
     
+    //tallentaa kirjailijan tietokantaan
     @Transactional
     public void saveAuthor(Author author) {
         authorRepository.save(author);
     }
     
+    //poistaa kirjailijan tietokannasta ja kaikki kirjailijan kirjat
     @Transactional
     public void deleteAuthor(Long authorId) {
         Author a = authorRepository.findById(authorId);
@@ -55,10 +60,13 @@ public class AuthorService {
         authorRepository.delete(a);
     }
     
+    
+    //palauttaa validoituvaitko kirjailijan syötteet
     public boolean validateAuthorInput(Object name, Object surname) {
         return authorValidator.validateAuthorInput(name, surname);
     }
     
+    //palauttaa validoituiko kirjailija
     public boolean validateAuthor(Author author) {
         return authorValidator.validateAuthor(author);
     }
