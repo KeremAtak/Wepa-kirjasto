@@ -24,7 +24,7 @@ Käyttäjä voi selata kirjoja, genrejä ja kirjailijoita. Lisäksi kirjailija v
 
 <h3>Adminin tapaukset</h3>
 
-<h5>Kirjan/genren/kirjalijan luonti/h5>
+<h5>Kirjan/genren/kirjalijan luonti</h5>
 Admin voi luoda kirjoja/genrejä/kirjailijoita. Näitä luodessa syötteet validoidaan ja pituusehtojen täytyy täyttyä. Genren 
 nimi pitää olla uniikki mutta kirjan ja kirjailijan eivät tarvitse olla. Kirjan luomiseen vaaditaan se, että tietokannoista 
 löytyy ainakin yksi genre ja kirjailija. 
