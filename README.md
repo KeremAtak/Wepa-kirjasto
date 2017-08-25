@@ -1,2 +1,2 @@
 # Wepa-kirjasto
-[Aiheen kuvaus](dokumentation/aiheenKuvausJaRakenne.md)
+[Aiheen kuvaus](documentation/aiheenKuvausJaRakenne.md)
