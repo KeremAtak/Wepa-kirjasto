@@ -1,6 +1,6 @@
 <h2>Käyttötapaukset</h2>
 
-![kayttotapauskaavio](/documentation/kayttotapauskaavio.jpg)
+![kayttotapauskaavio](/documentation/kayttotapauskaavioupdated.jpg)
 
 <h3>Vierailijan tapaukset</h3>
 
