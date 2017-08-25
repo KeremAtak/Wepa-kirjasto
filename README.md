@@ -4,3 +4,5 @@
 [Käyttötapaukset](documentation/kayttotapaukset.md)
 
 [Tietokanta](documentation/tietokanta.md)
+
+[Toteuttamattomat ominaisuudet](documentation/toteuttamattomatOminaisuudet.md)
