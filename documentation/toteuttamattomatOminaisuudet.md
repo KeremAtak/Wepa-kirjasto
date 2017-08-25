@@ -5,12 +5,9 @@ Ohjelmani järjestää dataa aakkosjärjestyksen mukaan mutta sivutus puuttuu. S
 toimiminen voi siis takkuilla.
 
 <h3>Validointi</h3>
-Validointi on toteutettu mutta se on tehty omilla menetelmillä. En saanut validointia tehtyä Springin annotaatioilla mutta
-toteutus onnistui siitä huolimatta ihan hyvin. Virhetapauksessa ohjaudutaan erillisille sivulle viestiviestin kera.
-Virheviestejä voisi toteuttaa kattavammin.
+Validointi on toteutettu mutta se on tehty omilla menetelmillä. En saanut validointia toteutta Springin annotaatioilla mutta
+toteutus onnistui siitä huolimatta hyvin. Virhetapauksessa tulee näytölle näkymä erillisille sivulle virheviestin kera.
+Virheviestejä voisi toteuttaa kattavammin, ja validointi voisi tarkastaa syötteitä tarkemmin (esim. kirjailijan nimet eivät sisällä numeroita.)
 
 <h3>Ulkoasu</h3>
 Ulkoasua ei ole paranneltu css:llä tai javascriptillä. Jätin tämän kurssin loppuun ja päätin tehdä jos kerkeän.
-
-<h3>Koodin kommentointi</h3>
-En huomannut että kommentointi on vaatimuksena projektin ehtoissa. Metodien, luokkien ja ilmentymämuuttujien nimet ovat kuitenkin hyvin deskriptiivisiä.
