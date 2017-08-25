@@ -15,14 +15,8 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 @Entity
 public class Book extends AbstractPersistable<Long> {
     
-    @NotBlank
     private String name;
-    
-    @NotNull
-    @Min(1)
     private int pages;
-    
-    @NotNull
     private int year;
     
     private String description;

@@ -9,12 +9,7 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 @Entity
 public class Reservation extends AbstractPersistable<Long> {
     
-    @NotNull
-    @OneToOne
     private Person person;
-    
-    @NotNull
-    @OneToOne
     private Book book;
     
     public Reservation(Person person, Book book) {

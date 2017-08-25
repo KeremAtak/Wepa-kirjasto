@@ -13,8 +13,6 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 @Entity
 public class Genre extends AbstractPersistable<Long> {
     
-    @NotBlank
-    @Column(unique = true)
     private String name;
    
     @OneToMany

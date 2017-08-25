@@ -14,17 +14,9 @@ import org.springframework.security.crypto.bcrypt.BCrypt;
 @Entity
 public class Person extends AbstractPersistable<Long> {
     
-    @NotBlank
-    @Length(min = 4, max = 20)
-    @Column(unique = true)
     private String username;
-    
-    @NotBlank
     private String password;
-    
     private String salt;
-    
-    @OneToOne
     private Reservation reservation;
     
     public Person(String username, String password) {
