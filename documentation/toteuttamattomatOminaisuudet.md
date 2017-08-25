@@ -13,5 +13,4 @@ Virheviestejä voisi toteuttaa kattavammin.
 Ulkoasua ei ole paranneltu css:llä tai javascriptillä. Jätin tämän kurssin loppuun ja päätin tehdä jos kerkeän.
 
 <h3>Koodin kommentointi</h3>
-En huomannut että kommentointi on vaatimuksena projektin ehtoissa. Metodien, luokkien ja ilmentymämuuttujat ovat kuitenkin
-hyvin deskriptiivisiä.
+En huomannut että kommentointi on vaatimuksena projektin ehtoissa. Metodien, luokkien ja ilmentymämuuttujien nimet ovat kuitenkin hyvin deskriptiivisiä.
