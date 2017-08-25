@@ -4,10 +4,9 @@ import wad.domain.Person;
 
 public class PersonValidator extends Validator {
     
-    public boolean validateRegistration(Person person) {
-        System.out.println(person.getPassword());
-        if (person.getUsername().length() < 4 || person.getUsername().length() > 20
-            || person.getPassword().length() < 1) {
+    public boolean validateRegistration(String username, String password) {
+        if (username.length() < 4 || username.length() > 20
+            || password.length() < 8 || password.length() > 20)  {
             return false;
         }
         return true;

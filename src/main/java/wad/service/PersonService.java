@@ -65,8 +65,8 @@ public class PersonService {
         personRepository.delete(p);
     }
     
-    public boolean validateRegistration(Person person) {
-        return personValidator.validateRegistration(person);
+    public boolean validateRegistration(String username, String password) {
+        return personValidator.validateRegistration(username, password);
     }
 
     public boolean validateRegistrationUniqueness(Person person) {

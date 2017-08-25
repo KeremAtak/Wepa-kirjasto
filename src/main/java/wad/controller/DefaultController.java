@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import wad.domain.Author;
 import wad.domain.Book;
 import wad.domain.Genre;
@@ -58,14 +59,16 @@ public class DefaultController {
     }
     
     @RequestMapping(value = "register", method = RequestMethod.POST) 
-    public String registerUser(@ModelAttribute Person person, Model model) {
-        if (!personService.validateRegistrationUniqueness(person)) {
-            model.addAttribute("text", "Virhe käyttäjän luonnissa. Käyttäjä on jo olemassa tällä nimellä.");
+    public String registerUser(@RequestParam String username, @RequestParam String password, Model model) {
+        
+         if (!personService.validateRegistration(username, password)) {
+            model.addAttribute("text", "Virhe käyttäjän luonnissa. Tarkista nimen ja salasanan pituudet.");
             return "errorpage";
         }
         
-        if (!personService.validateRegistration(person)) {
-            model.addAttribute("text", "Virhe käyttäjän luonnissa. Tarkista nimen ja salasanan pituudet.");
+        Person person = new Person(username, password);
+        if (!personService.validateRegistrationUniqueness(person)) {
+            model.addAttribute("text", "Virhe käyttäjän luonnissa. Käyttäjä on jo olemassa tällä nimellä.");
             return "errorpage";
         }
         

@@ -27,6 +27,12 @@ public class Person extends AbstractPersistable<Long> {
     @OneToOne
     private Reservation reservation;
     
+    public Person(String username, String password) {
+        this.username = username;
+        setPassword(password);
+        this.reservation = null;
+    }
+    
     public Person() {
         this.reservation = null;
     }
