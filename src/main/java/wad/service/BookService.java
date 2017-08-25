@@ -6,14 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import wad.domain.Author;
-import wad.domain.Book;
-import wad.domain.Genre;
-import wad.domain.Person;
-import wad.domain.Reservation;
-import wad.repository.BookRepository;
-import wad.repository.PersonRepository;
-import wad.repository.ReservationRepository;
+import wad.domain.*;
+import wad.repository.*;
 import wad.valid.BookValidator;
 
 @Service
@@ -82,9 +76,9 @@ public class BookService {
         bookRepository.delete(bookId);
     }
 
-    public boolean validateBookInputs(Object genreId, Object authorId, Object name, 
+    public boolean validateBookInputs(Object genreId, Object authorId, Object title, 
                                    Object pages, Object year, Object description) {
-       return bookValidator.validateBookInputs(genreId, authorId, name, pages, year, description);
+       return bookValidator.validateBookInputs(genreId, authorId, title, pages, year, description);
    }
     
     public boolean validateBook(Book book) {

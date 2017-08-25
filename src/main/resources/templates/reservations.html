@@ -10,7 +10,7 @@
         <h4>Varaukset</h4>
         <ul>
             <li th:each="reservation : ${reservations}">
-                <a th:text="${reservation.book.name}">book name</a>
+                <a th:text="${reservation.book.title}">book name</a>
                 <form th:action="@{/reservations/{reservationId}(reservationId=${reservation.id})}" th:method="DELETE">
                     <input type="submit" value="Palauta kirja"/>            
                 </form>

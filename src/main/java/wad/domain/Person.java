@@ -1,13 +1,7 @@
 package wad.domain;
 
-import java.util.ArrayList;
-import java.util.List;
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 
@@ -17,6 +11,8 @@ public class Person extends AbstractPersistable<Long> {
     private String username;
     private String password;
     private String salt;
+    
+    @OneToOne
     private Reservation reservation;
     
     public Person(String username, String password) {

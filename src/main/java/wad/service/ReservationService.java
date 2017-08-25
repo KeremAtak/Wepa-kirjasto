@@ -3,13 +3,9 @@ package wad.service;
 import java.util.List;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import wad.domain.Person;
-import wad.domain.Reservation;
-import wad.repository.PersonRepository;
-import wad.repository.ReservationRepository;
+import wad.domain.*;
+import wad.repository.*;
 
 @Service
 public class ReservationService {

@@ -1,8 +1,6 @@
 package wad.valid;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import wad.domain.Genre;
-import wad.service.GenreService;
 
 public class GenreValidator extends Validator{
     

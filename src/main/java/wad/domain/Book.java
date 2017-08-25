@@ -1,21 +1,14 @@
 package wad.domain;
 
-import java.util.ArrayList;
-import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 @Entity
 public class Book extends AbstractPersistable<Long> {
     
-    private String name;
+    private String title;
     private int pages;
     private int year;
     
@@ -30,8 +23,8 @@ public class Book extends AbstractPersistable<Long> {
     @ManyToOne
     private Genre genre;
     
-    public Book(String name, int pages, int year, String description, Genre genre, Author author) {
-        this.name = name;
+    public Book(String title, int pages, int year, String description, Genre genre, Author author) {
+        this.title = title;
         this.pages = pages;
         this.year = year;
         this.genre = genre;
@@ -44,12 +37,12 @@ public class Book extends AbstractPersistable<Long> {
          
     }
     
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
     
-    public void setName(String name) {
-        this.name = name;
+    public void setTitle(String title) {
+        this.title = title;
     }
     
     public int getPages() {

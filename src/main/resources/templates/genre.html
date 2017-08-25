@@ -10,14 +10,14 @@
         
         <ul>
             <li th:each="book : ${books}">
-                <a th:href="@{/genres/{genreId}/{bookId}(genreId=${genre.id},bookId=${book.id})}" th:text="${book.name}">author name</a>
+                <a th:href="@{/genres/{genreId}/{bookId}(genreId=${genre.id},bookId=${book.id})}" th:text="${book.title}">author name</a>
             </li>
         </ul>
         
         <div sec:authorize="hasRole('ROLE_ADMIN')">
             <h3 th:text="'Lisää ' + ${genre.name} + 'kirja'">genrename</h3>
             <form th:action="@{/genres/{genreId}(genreId=${genre.id})}" method="POST">
-                <input type="text" name="name" placeholder="nimi (4-50)"/>
+                <input type="text" name="title" placeholder="nimi (4-50)"/>
                 <input type="text" name="pages" placeholder="sivut (1-2500)"/>
                 <input type="text" name="year" placeholder="vuosi"/><br/>
                 <input type="text" name="description" placeholder="kuvaus (1-2500)" style="width: 529px; height: 60px"/><br/>

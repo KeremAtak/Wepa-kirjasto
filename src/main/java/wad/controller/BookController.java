@@ -13,7 +13,6 @@ import wad.domain.*;
 import wad.service.AuthorService;
 import wad.service.BookService;
 import wad.service.GenreService;
-import wad.valid.BookValidator;
 
 @Controller
 @RequestMapping("/genres/{genreId}")
@@ -49,16 +48,16 @@ public class BookController {
     
     @Secured("ROLE_ADMIN")
     @RequestMapping(method = RequestMethod.POST)
-    public String addBook(@PathVariable("genreId") String genreId, @RequestParam String name, @RequestParam String pages, 
+    public String addBook(@PathVariable("genreId") String genreId, @RequestParam String title, @RequestParam String pages, 
             @RequestParam String year, @RequestParam String description, @RequestParam String authorId, Model model) {
-        if (!bookService.validateBookInputs(genreId, authorId, name, pages, year, description)) {
+        if (!bookService.validateBookInputs(genreId, authorId, title, pages, year, description)) {
             model.addAttribute("text", "Virhe kirjan luonnissa. Lisäsithän esimerkiksi sivut ja vuodet numeroina?");
             return "errorpage";
         }
         Genre genre = genreService.findGenreById(Long.parseLong(genreId));
         Author author = authorService.findAuthorById(Long.parseLong(authorId));
         
-        Book b = new Book(name, Integer.parseInt(pages), Integer.parseInt(year), description, genre, author);
+        Book b = new Book(title, Integer.parseInt(pages), Integer.parseInt(year), description, genre, author);
         
         if (!bookService.validateBook(b)) {
             model.addAttribute("text", "Virhe kirjan luonnissa. Tarkista että syötteiden ehdot täyttyvät.");
